@@ -1,0 +1,4 @@
+# Build output
+/code-challenge/bin/
+/code-challenge.Tests/bin/
+obj/
