@@ -10,6 +10,7 @@ using code_challenge.Tests.Integration.Extensions;
 
 using System;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using code_challenge.Tests.Integration.Helpers;
@@ -77,6 +78,13 @@ namespace code_challenge.Tests.Integration
             var employeeId = "16a596ae-edd3-4847-99fe-c4518e82c86f";
             var expectedFirstName = "John";
             var expectedLastName = "Lennon";
+            var expectedPosition = "Development Manager";
+            var expectedDepartment = "Engineering";
+            var expectedDirectReports = new[]
+            {
+                "b7839309-3348-463b-a7e3-5de1c168beb3",
+                "03aa1462-ffa9-4978-901b-7c001562cf6f"
+            };
 
             // Execute
             var getRequestTask = _httpClient.GetAsync($"api/employee/{employeeId}");
@@ -87,6 +95,9 @@ namespace code_challenge.Tests.Integration
             var employee = response.DeserializeContent<Employee>();
             Assert.AreEqual(expectedFirstName, employee.FirstName);
             Assert.AreEqual(expectedLastName, employee.LastName);
+            Assert.AreEqual(expectedPosition, employee.Position);
+            Assert.AreEqual(expectedDepartment, employee.Department);
+            CollectionAssert.AreEquivalent(expectedDirectReports, employee.DirectReports?.Select(e => e.EmployeeId).ToArray());
         }
 
         [TestMethod]
