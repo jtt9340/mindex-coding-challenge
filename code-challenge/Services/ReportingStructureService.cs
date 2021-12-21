@@ -26,7 +26,8 @@ namespace challenge.Services
             _logger.LogDebug($"{employee.FirstName} {employee.LastName} has " +
                              $"{employee.DirectReports.Count} direct reports");
 
-            return employee.DirectReports.Count + employee.DirectReports.Select(ComputeReportCount).Sum();
+            // Needed to eagerly fetch all direct reports for all descendants
+            return employee.DirectReports.Count + employee.DirectReports.Sum(e => ComputeReportCount(_employeeService.GetById(e.EmployeeId)));
         }
 
         public ReportingStructure GetByEmployeeId(string employeeId)
