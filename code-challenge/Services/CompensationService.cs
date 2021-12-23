@@ -8,12 +8,12 @@ namespace challenge.Services
 {
     public class CompensationService : ICompensationService
     {
-        private readonly ICompensationRepository _compensationRepository;
+        private readonly IEmployeeRepository _employeeRepository;
         private readonly ILogger<CompensationService> _logger;
 
-        public CompensationService(ILogger<CompensationService> logger, ICompensationRepository compensationRepository)
+        public CompensationService(ILogger<CompensationService> logger, IEmployeeRepository compensationRepository)
         {
-            _compensationRepository = compensationRepository;
+            _employeeRepository = compensationRepository;
             _logger = logger;
         }
 
@@ -26,8 +26,8 @@ namespace challenge.Services
             else
             {
                 _logger.LogDebug($"Creating compensation for employee with ID '{compensation.Employee.EmployeeId}'");
-                _compensationRepository.Add(compensation);
-                _compensationRepository.SaveAsync().Wait();
+                _employeeRepository.Add(compensation);
+                _employeeRepository.SaveAsync().Wait();
             }
             
             return compensation;
@@ -42,7 +42,7 @@ namespace challenge.Services
             }
 
             _logger.LogDebug($"Getting compensation for employee with ID '{employeeId}'");
-            return _compensationRepository.GetByEmployeeId(employeeId);
+            return _employeeRepository.GetByEmployeeId(employeeId);
         }
     }
 }
