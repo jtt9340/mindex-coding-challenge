@@ -12,28 +12,14 @@ using System.Net.Http;
 namespace code_challenge.Tests.Integration
 {
     [TestClass]
-    public class ReportingStructureControllerTests
+    public class ReportingStructureControllerTests : ControllerTests
     {
-        private static HttpClient _httpClient;
-        private static TestServer _testServer;
-
         [ClassInitialize]
-        public static void InitializeClass(TestContext context)
-        {
-            _testServer = new TestServer(WebHost.CreateDefaultBuilder()
-                .UseStartup<TestServerStartup>()
-                .UseEnvironment("Development"));
-
-            _httpClient = _testServer.CreateClient();
-        }
+        public new static void InitializeClass(TestContext context) => ControllerTests.InitializeClass(context);
 
         [ClassCleanup]
-        public static void CleanUpTest()
-        {
-            _httpClient.Dispose();
-            _testServer.Dispose();
-        }
-
+        public new static void CleanUpTest() => ControllerTests.CleanUpTest();
+        
         [TestMethod]
         public void GetReportingStructureByEmployeeId_Returns_Ok()
         {
@@ -51,7 +37,7 @@ namespace code_challenge.Tests.Integration
             var expectedNumberOfReports = 4;
             
             // Execute
-            var getRequestTask = _httpClient.GetAsync($"api/reportingStructure/{employeeId}");
+            var getRequestTask = HttpClient.GetAsync($"api/reportingStructure/{employeeId}");
             var response = getRequestTask.Result;
             
             // Assert

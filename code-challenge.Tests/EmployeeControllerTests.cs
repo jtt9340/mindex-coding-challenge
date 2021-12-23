@@ -19,27 +19,13 @@ using System.Text;
 namespace code_challenge.Tests.Integration
 {
     [TestClass]
-    public class EmployeeControllerTests
+    public class EmployeeControllerTests : ControllerTests
     {
-        private static HttpClient _httpClient;
-        private static TestServer _testServer;
-
         [ClassInitialize]
-        public static void InitializeClass(TestContext context)
-        {
-            _testServer = new TestServer(WebHost.CreateDefaultBuilder()
-                .UseStartup<TestServerStartup>()
-                .UseEnvironment("Development"));
-
-            _httpClient = _testServer.CreateClient();
-        }
+        public new static void InitializeClass(TestContext context) => ControllerTests.InitializeClass(context);
 
         [ClassCleanup]
-        public static void CleanUpTest()
-        {
-            _httpClient.Dispose();
-            _testServer.Dispose();
-        }
+        public new static void CleanUpTest() => ControllerTests.CleanUpTest();
 
         [TestMethod]
         public void CreateEmployee_Returns_Created()
@@ -56,7 +42,7 @@ namespace code_challenge.Tests.Integration
             var requestContent = new JsonSerialization().ToJson(employee);
 
             // Execute
-            var postRequestTask = _httpClient.PostAsync("api/employee",
+            var postRequestTask = HttpClient.PostAsync("api/employee",
                new StringContent(requestContent, Encoding.UTF8, "application/json"));
             var response = postRequestTask.Result;
 
@@ -87,7 +73,7 @@ namespace code_challenge.Tests.Integration
             };
 
             // Execute
-            var getRequestTask = _httpClient.GetAsync($"api/employee/{employeeId}");
+            var getRequestTask = HttpClient.GetAsync($"api/employee/{employeeId}");
             var response = getRequestTask.Result;
 
             // Assert
@@ -115,7 +101,7 @@ namespace code_challenge.Tests.Integration
             var requestContent = new JsonSerialization().ToJson(employee);
 
             // Execute
-            var putRequestTask = _httpClient.PutAsync($"api/employee/{employee.EmployeeId}",
+            var putRequestTask = HttpClient.PutAsync($"api/employee/{employee.EmployeeId}",
                new StringContent(requestContent, Encoding.UTF8, "application/json"));
             var putResponse = putRequestTask.Result;
             
@@ -142,7 +128,7 @@ namespace code_challenge.Tests.Integration
             var requestContent = new JsonSerialization().ToJson(employee);
 
             // Execute
-            var postRequestTask = _httpClient.PutAsync($"api/employee/{employee.EmployeeId}",
+            var postRequestTask = HttpClient.PutAsync($"api/employee/{employee.EmployeeId}",
                new StringContent(requestContent, Encoding.UTF8, "application/json"));
             var response = postRequestTask.Result;
 
