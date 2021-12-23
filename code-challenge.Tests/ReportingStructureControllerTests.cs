@@ -50,5 +50,19 @@ namespace code_challenge.Tests.Integration
             CollectionAssert.AreEquivalent(expectedDirectReports, reportingStructure.Employee.DirectReports?.Select(e => e.EmployeeId).ToArray());
             Assert.AreEqual(expectedNumberOfReports, reportingStructure.NumberOfReports);
         }
+
+        [TestMethod]
+        public void GetReportingStructureByNonExistentEmployeeId_Returns_NotFound()
+        {
+            // Arrange
+            var employeeId = "doesn't exist";
+            
+            // Execute
+            var getRequestTask = HttpClient.GetAsync($"api/reportingStructure/{employeeId}");
+            var response = getRequestTask.Result;
+            
+            // Assert
+            Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
+        }
     }
 }

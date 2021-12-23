@@ -119,5 +119,37 @@ namespace code_challenge.Tests.Integration
                 Assert.AreEqual(expectedCompensation.EffectiveDate, actualCompensation.EffectiveDate);
             }
         }
+
+        [TestMethod]
+        public void CreateCompensationBadDate_Returns_BadRequest()
+        {
+            // Arrange
+            var compensationDto = new DataTransferCompensation
+            {
+                Employee = "c0c2293d-16bd-4603-8e08-638a9d18b22c",
+                Salary = 120_000,
+                EffectiveDate = "bad date"
+            };
+            
+            // Execute
+            var response = CreateCompensation(compensationDto).Result;
+            
+            // Assert
+            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
+        }
+
+        [TestMethod]
+        public void GetCompensationByNonExistentEmployeeId_Returns_NotFound()
+        {
+            // Arrange
+            var employeeId = "doesn't exist";
+            
+            // Execute
+            var getRequestTask = HttpClient.GetAsync($"api/compensation/{employeeId}");
+            var response = getRequestTask.Result;
+            
+            // Assert
+            Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
+        }
     }
 }
