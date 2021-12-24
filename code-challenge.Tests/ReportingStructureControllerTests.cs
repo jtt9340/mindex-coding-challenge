@@ -1,16 +1,16 @@
 using challenge.Models;
-using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using code_challenge.Tests.Integration.Extensions;
 
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 
 namespace code_challenge.Tests.Integration
 {
+    /// <summary>
+    /// Unit tests for the
+    /// <see cref="challenge.Controllers.ReportingStructureController">ReportingStructure Controller</see>.
+    /// </summary>
     [TestClass]
     public class ReportingStructureControllerTests : ControllerTests
     {

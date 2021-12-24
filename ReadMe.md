@@ -1,4 +1,8 @@
 # Mindex Coding Challenge
+This is my submission for the Mindex Coding Challenge. What follows is part of the original README for the project.
+
+---
+
 ## What's Provided
 A simple [.NetCore 2.1](https://dotnet.microsoft.com/download/dotnet-core/2.1) web application has been created and bootstrapped 
 with data. The application contains information about all employees at a company. On application start-up, an in-memory 

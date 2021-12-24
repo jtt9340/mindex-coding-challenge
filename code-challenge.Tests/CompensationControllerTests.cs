@@ -12,6 +12,9 @@ using System.Text;
 
 namespace code_challenge.Tests.Integration
 {
+    /// <summary>
+    /// Unit tests for the <see cref="challenge.Controllers.CompensationController">Compensation Controller</see>.
+    /// </summary>
     [TestClass]
     public class CompensationControllerTests : ControllerTests
     {
@@ -21,6 +24,13 @@ namespace code_challenge.Tests.Integration
         [ClassCleanup]
         public new static void CleanUpTest() => ControllerTests.CleanUpTest();
 
+        /// <summary>
+        /// Given a <see cref="DataTransferCompensation">DataTransferCompensation</see>, make a POST request to the
+        /// <c>api/compensation</c> endpoint to create and then get back a proper
+        /// <see cref="Compensation">Compensation</see> object.
+        /// </summary>
+        /// <param name="compensationDto"></param>
+        /// <returns></returns>
         private static Task<HttpResponseMessage> CreateCompensation(DataTransferCompensation compensationDto)
         {
             var requestContent = new JsonSerialization().ToJson(compensationDto);

@@ -6,17 +6,29 @@ using challenge.Repositories;
 
 namespace challenge.Services
 {
+    /// <summary>
+    /// The service class which contains all the functionality used by the
+    /// <see cref="challenge.Controllers.CompensationController">CompensationController</see>.
+    /// </summary>
     public class CompensationService : ICompensationService
     {
         private readonly IEmployeeRepository _employeeRepository;
         private readonly ILogger<CompensationService> _logger;
 
-        public CompensationService(ILogger<CompensationService> logger, IEmployeeRepository compensationRepository)
+        /// <summary>
+        /// Construct a new CompensationService.
+        /// </summary>
+        /// <param name="logger">The <see cref="ILogger{TCategoryName}">ILogger</see> instance to log activities for
+        /// this class</param>
+        /// <param name="employeeRepository">The <see cref="IEmployeeRepository">IEmployeeRepository</see>
+        /// implementation to use for this class</param>
+        public CompensationService(ILogger<CompensationService> logger, IEmployeeRepository employeeRepository)
         {
-            _employeeRepository = compensationRepository;
+            _employeeRepository = employeeRepository;
             _logger = logger;
         }
 
+        /// <inheritdoc cref="ICompensationService.Create"/>
         public Compensation Create(Compensation compensation)
         {
             if (compensation == null)
@@ -33,6 +45,7 @@ namespace challenge.Services
             return compensation;
         }
 
+        /// <inheritdoc cref="ICompensationService.GetByEmployeeId"/>
         public IEnumerable<Compensation> GetByEmployeeId(string employeeId)
         {
             if (string.IsNullOrEmpty(employeeId))
